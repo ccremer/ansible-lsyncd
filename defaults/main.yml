@@ -2,6 +2,7 @@
 lsyncd_logging_dir: /var/log/lsyncd
 lsyncd_logging_status_file: lsyncd.status
 lsyncd_logging_file: lsync.log
+lsyncd_conf: /etc/lsyncd.conf.lua
 lsyncd_targets: []
 lsyncd_extra_settings: []
 lsyncd_retry: true
