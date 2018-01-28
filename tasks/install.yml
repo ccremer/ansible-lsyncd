@@ -1,0 +1,47 @@
+---
+# Install
+- include_tasks: install-debian.yml
+  name: install debian-specific stuff
+  when: ansible_os_family == "Debian"
+
+- include_tasks: install-centos.yml
+  name: install centos-specific stuff
+  when: ansible_os_family == "RedHat"
+
+- name: Installing lsyncd
+  become: true
+  block:
+  - name: Download lsyncd release
+    unarchive:
+      src: "https://github.com/axkibe/lsyncd/archive/{{ lsyncd_release }}.tar.gz"
+      dest: /tmp
+      remote_src: true
+  - name: Compiling lsyncd
+    command: "cmake ."
+    args:
+      chdir: "{{ lsyncd_source }}"
+  - name: Installing lsyncd
+    make:
+      chdir: "{{ lsyncd_source }}"
+      target: install
+    notify: "service reload"
+
+- name: Setting up logrotate
+  become: true
+  block:
+  - name: Installing logrotate config
+    template:
+      src: lsyncd.logrotate.j2
+      dest: /etc/logrotate.d/lsyncd
+      mode: 0644
+      owner: root
+      group: root
+
+- name: Adjust the maximum amount of inotify watches. If needed
+  lineinfile:
+    dest: /etc/sysctl.conf
+    line: "fs.inotify.max_user_watches={{ lsyncd_max_user_watches }}"
+    regexp: "^fs.inotify.max_user_watches="
+    state: present
+  notify: reload_sysctl
+  when: lsyncd_max_user_watches is defined

@@ -1,0 +1,9 @@
+---
+- name: Uninstall build tools
+  apt:
+    pkg: "{{ item }}"
+    state: absent
+  with_items:
+    - cmake
+    - g++
+  become: true

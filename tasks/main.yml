@@ -1,0 +1,41 @@
+---
+- stat:
+    path: /usr/local/bin/lsyncd
+  register: lsyncd_installed
+
+- include_tasks: install.yml
+  name: Install
+  when:
+    - lsyncd_installed.stat.exists == False or lsyncd_update
+
+- name: Installing lsync service
+  become: true
+  template:
+    src: lsync.service.j2
+    dest: "{{ lsyncd_service }}"
+    owner: root
+    group: root
+    mode: 0644
+  notify: "service reload"
+
+- include_tasks: cleanup.yml
+  name: Cleanup
+  when:
+    - lsyncd_installed.stat.exists == False or lsyncd_update
+
+- name: Set up logging dir
+  file:
+    path: "{{ lsyncd_logging_dir }}"
+    state: directory
+  become: true
+
+- name: Apply config for lsyncd
+  template:
+    src: lsyncd.lua.j2
+    dest: "{{ lsyncd_conf }}"
+    owner: root
+    group: root
+    mode: 0755
+  become: true
+  notify:
+    restart_lsyncd

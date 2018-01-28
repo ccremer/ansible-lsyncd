@@ -1,0 +1,9 @@
+---
+- name: Uninstall build tools
+  yum:
+    pkg: "{{ item }}"
+    state: removed
+  with_items:
+    - cmake
+    - g++
+  become: true

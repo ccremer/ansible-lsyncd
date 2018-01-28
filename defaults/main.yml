@@ -1,0 +1,17 @@
+---
+lsyncd_logging_dir: /var/log/lsyncd
+lsyncd_logging_status_file: lsyncd.status
+lsyncd_logging_file: lsync.log
+lsyncd_targets: []
+lsyncd_extra_settings: []
+lsyncd_retry: true
+lsyncd_release: release-2.2.2
+lsyncd_update: false
+lsyncd_default_rsync_args:
+  - "archive = true"
+lsyncd_cleanup: true
+
+# Desired number of inotify watches in the kernel. Should be more then the
+# number of files and folders you want to be kept in sync
+# The default on a freshly installed Debian was 8192 (which is way too low for lsyncd)
+# lsyncd_max_user_watches: 524288

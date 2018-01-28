@@ -1,0 +1,11 @@
+[Unit]
+Description=Lsync, Live Syncing (Mirror) Daemon
+Requires=network.target
+
+[Service]
+Type=forking
+ExecStart={{ lsyncd_bin }} -pidfile {{ lsyncd_pid }} {{ lsyncd_conf }}
+PIDFile={{ lsyncd_pid }}
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,12 @@
+---
+- name: Install dependencies
+  yum:
+    pkg: "{{ item }}"
+    state: latest
+  with_items:
+    - cmake
+    - rsync
+    - lua
+    - lua-devel
+    - g++
+  become: true

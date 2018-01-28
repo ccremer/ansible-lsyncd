@@ -1,0 +1,16 @@
+---
+# Cleanup
+- name: Removing source files
+  file:
+    path: "{{ lsyncd_source }}"
+    state: absent
+
+- include_tasks: cleanup-debian.yml
+  when:
+    - ansible_os_family == "Debian"
+    - lsyncd_cleanup
+
+- include_tasks: cleanup-centos.yml
+  when:
+    - ansible_os_family == "RedHat"
+    - lsyncd_cleanup

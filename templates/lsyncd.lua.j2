@@ -1,0 +1,45 @@
+--[[
+This file was automatically created by ansible role 'lsyncd'.
+Do not modify directly, as your changes may get lost!
+--]]
+
+settings {
+        logfile = "{{lsyncd_logging_dir}}/{{lsyncd_logging_file}}",
+        statusFile = "{{lsyncd_logging_dir}}/{{lsyncd_logging_status_file}}",
+        insist = {{ lsyncd_retry | default(true) | lower }},
+{% for setting in lsyncd_extra_settings %}
+        {{ setting }},
+{% endfor %}
+}
+
+{% for target in lsyncd_targets %}
+{% if target.desc is defined %}
+-- {{ target.desc }}
+{% endif %}
+sync {
+        {{ target.proto | default("default.rsyncssh") }},
+        source = "{{ target.source | mandatory }}",
+{% if target.host is defined %}
+        targetdir = "{{ target.target | mandatory }}",
+        host = "{{ target.host }}",
+{% else %}
+        target = "{{ target.target | mandatory }}",
+{% endif %}
+        rsync = {
+{% for arg in lsyncd_default_rsync_args %}
+            {{ arg }},
+{% endfor %}
+{% if target.rsync_extra_args is defined %}
+{% for arg in target.rsync_extra_args %}
+            {{ arg }},
+{% endfor %}
+{% endif %}
+        },
+{% if target.extra_args is defined %}
+{% for arg in target.extra_args %}
+        {{ arg }},
+{% endfor %}
+{% endif %}
+}
+
+{% endfor %}
