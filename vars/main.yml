@@ -3,6 +3,5 @@ lsyncd_source: /tmp/lsyncd-{{ lsyncd_release }}
 lsyncd_bin: /usr/local/bin/lsyncd
 lsyncd_pid: /var/run/lsync
 lsyncd_service: /etc/systemd/system/lsync.service
-
 root_keyfile: /root/.ssh/id_ecdsa
 tmp_keyfile: /tmp/id_ecdsa.tmp

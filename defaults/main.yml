@@ -11,7 +11,7 @@ lsyncd_update: false
 lsyncd_default_rsync_args:
   - "archive = true"
 lsyncd_cleanup: true
-
+lsyncd_install_dependencies: true
 # Desired number of inotify watches in the kernel. Should be more then the
 # number of files and folders you want to be kept in sync
 # The default on a freshly installed Debian was 8192 (which is way too low for lsyncd)
