@@ -10,3 +10,4 @@
     - cmake
     - g++
   become: true
+  when: lsyncd_install_dependencies
