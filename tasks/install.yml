@@ -38,6 +38,7 @@
       group: root
 
 - name: Adjust the maximum amount of inotify watches. If needed
+  become: true
   lineinfile:
     dest: /etc/sysctl.conf
     line: "fs.inotify.max_user_watches={{ lsyncd_max_user_watches }}"
