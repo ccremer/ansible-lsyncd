@@ -1,6 +1,7 @@
 ---
 # Cleanup
 - name: Removing source files
+  become: true
   file:
     path: "{{ lsyncd_source }}"
     state: absent
