@@ -25,7 +25,7 @@
       src: templates/lsync.service.j2
       dest: "{{ lsyncd_service }}"
       owner: root
-      groupt: root
+      group: root
     notify: "service reload"
 
 - name: Setting up logrotate
