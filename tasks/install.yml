@@ -1,12 +1,7 @@
 ---
 # Install
-- include_tasks: install-debian.yml
-  name: install debian-specific stuff
-  when: ansible_os_family == "Debian"
-
-- include_tasks: install-centos.yml
-  name: install centos-specific stuff
-  when: ansible_os_family == "RedHat"
+- include_tasks: "install-{{ ansible_os_family | lower }}.yml"
+  name: install OS-specific dependencies
 
 - name: Installing lsyncd
   become: true
