@@ -20,13 +20,6 @@
       chdir: "{{ lsyncd_source }}"
       target: install
     notify: "service reload"
-  - name: Installing lsyncd service
-    template:
-      src: templates/lsync.service.j2
-      dest: "{{ lsyncd_service }}"
-      owner: root
-      group: root
-    notify: "service reload"
 
 - name: Setting up logrotate
   become: true
