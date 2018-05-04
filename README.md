@@ -35,7 +35,7 @@ lsyncd_targets: []
 lsyncd_extra_settings: []
 lsyncd_retry: true # the 'insist' option
 lsyncd_install_dependencies: true # install dependencies outside of this role
-lsyncd_release: release-2.2.2 # the tar.gz source file on github
+lsyncd_release: release-2.2.3 # the tar.gz source file on github
 lsyncd_update: false # skip installing new version, just update config
 lsyncd_default_rsync_args: # default rsync options for all sync targets
   - "archive = true"

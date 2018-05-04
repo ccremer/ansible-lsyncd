@@ -6,7 +6,7 @@ lsyncd_conf: /etc/lsyncd.conf.lua
 lsyncd_targets: []
 lsyncd_extra_settings: []
 lsyncd_retry: true
-lsyncd_release: release-2.2.2
+lsyncd_release: release-2.2.3
 lsyncd_update: false
 lsyncd_default_rsync_args:
   - "archive = true"
