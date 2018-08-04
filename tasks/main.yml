@@ -18,6 +18,13 @@
     mode: 0644
   notify: "service reload"
 
+- name: Ensure service is enabled at boot
+  become: true
+  service:
+    name: lsync
+    enabled: "{{ lsyncd_targets | length > 0 | bool }}"
+  notify: "service reload"
+
 - include_tasks: cleanup.yml
   name: Cleanup
   when:

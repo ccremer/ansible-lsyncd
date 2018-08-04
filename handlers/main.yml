@@ -7,13 +7,6 @@
   systemd:
     daemon_reload: true
 
-- name: enable_lsyncd_service
-  become: true
-  service:
-    name: lsync
-    enabled: true
-  listen: "service reload"
-
 - name: restart_lsyncd
   service:
     name: lsync
@@ -21,6 +14,7 @@
   become: true
   listen:
     - "service reload"
+  when: lsyncd_targets | length > 0
 
 - name: reload_sysctl
   shell: sysctl -p
