@@ -13,14 +13,15 @@ Installs and configures the latest [lsync](https://github.com/axkibe/lsyncd) rel
 Example usage:
 ```yaml
 - hosts: webservers
-  vars:
-    lsyncd_targets:
-      - source: /var/www/html
-        target: /backup/html
-        host: backupserver.localdomain
-        desc: Backup of html data # desc is optional, it just adds a comment
-  roles:
-    - role: ccremer.lsyncd
+  tasks:
+    - import_role:
+        name: ccremer.lsyncd
+      vars:
+        lsyncd_targets:
+          - source: /var/www/html
+            target: /backup/html
+            host: backupserver.localdomain
+            desc: Backup of html data # desc is optional, it just adds a comment
 ```
 
 ## Role Variables
@@ -46,17 +47,20 @@ lsyncd_cleanup: true # remove some build packages after installation
 
 ```yaml
 - hosts: webservers
-  vars:  
-    lsyncd_targets:
-    - source: /local/whatever
-      target: /mnt/tapearchive
-      proto: default.rsync
-      extra_args:  # this list is within the 'sync' section
-        - "excludeFrom = \"/etc/lsyncd/tapearchive.list\""
-        - "delay = 15"
-      rsync_extra_args: # this list is within the 'rsync' section
-        - "_extra = { \"--omit-dir-times\" }"
-        - "compress = true"
+  tasks:
+    - import_role:
+        name: ccremer.lsyncd
+      vars:
+        lsyncd_targets:
+        - source: /local/whatever
+          target: /mnt/tapearchive
+          proto: default.rsync
+          extra_args:  # this list is within the 'sync' section
+            - "excludeFrom = \"/etc/lsyncd/tapearchive.list\""
+            - "delay = 15"
+          rsync_extra_args: # this list is within the 'rsync' section
+            - "_extra = { \"--omit-dir-times\" }"
+            - "compress = true"        
 ```
 ## Gotchas
 
