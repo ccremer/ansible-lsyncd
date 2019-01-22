@@ -1,0 +1,21 @@
+---
+- name: Installing lsync service
+  become: true
+  template:
+    src: lsync.service-debian.j2
+    dest: "/etc/init.d/lsync"
+    owner: root
+    group: root
+    mode: 0755
+  notify: "service reload"
+  
+
+- name: enable sysv lsync service
+  become: yes
+  service: name=lsync enabled=yes
+
+- name: start lsync
+  become: yes
+  service: name=lsync state=started
+
+

@@ -1,0 +1,18 @@
+---
+- name: Installing lsync service
+  become: true
+  template:
+    src: lsync.service.j2
+    dest: "{{ lsyncd_service }}"
+    owner: root
+    group: root
+    mode: 0644
+  notify: "service reload"
+
+- name: Ensure service is enabled at boot
+  become: true
+  service:
+    name: lsync
+    enabled: "{{ lsyncd_targets | length > 0 | bool }}"
+  notify: "service reload"
+

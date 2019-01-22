@@ -1,0 +1,21 @@
+---
+# when using 'listen', order matters!
+
+- name: 'service reload '
+  become: yes
+  listen: "service reload"
+  service: name=lsync state=reloaded
+
+- name: restart_lsyncd
+  service:
+    name: lsync
+    state: restarted
+  become: true
+  listen:
+    - "service reload"
+  when: lsyncd_targets | length > 0
+
+- name: reload_sysctl
+  shell: sysctl -p
+  become: true
+  ignore_errors: true

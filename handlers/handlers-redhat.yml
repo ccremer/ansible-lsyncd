@@ -1,0 +1,22 @@
+---
+# when using 'listen', order matters!
+
+- name: daemon_reload
+  become: true
+  listen: "service reload"
+  systemd:
+    daemon_reload: true
+
+- name: restart_lsyncd
+  service:
+    name: lsync
+    state: restarted
+  become: true
+  listen:
+    - "service reload"
+  when: lsyncd_targets | length > 0
+
+- name: reload_sysctl
+  shell: sysctl -p
+  become: true
+  ignore_errors: true
