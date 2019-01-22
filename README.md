@@ -67,5 +67,4 @@ lsyncd_cleanup: true # remove some build packages after installation
 - This role does not setup the SSH connection between the hosts.
 - You may need to increase the inotify watches, in which case you need to define
   `lsyncd_max_user_watches: 524288` (default on debian is 8192, which may be too low).
-- If you have lsync <=2.2.2 installed, you might need to uninstall lua 5.2, as 2.2.3 needs
-  5.3 and both installed packages will conflict each other.
+
